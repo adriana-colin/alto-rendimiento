@@ -8,9 +8,6 @@ class FiguraGeometrica():
 
     def dibujaFigura(self):
         None
-        
-    def get_area(self):
-        return 999999999.9
 
     def modificar_x(self, x):
         self.ubicacion_x = x
@@ -42,9 +39,6 @@ class Circulo(FiguraGeometrica):
     def get_area(self):
         return math.pi * (self.radio ** 2)
 class Triangulo(FiguraGeometrica):
-    
-    base = 0.0
-    altura = 0.0
 
     def __init__(self, base, altura):
         self.base = float(base)
@@ -55,18 +49,47 @@ class Triangulo(FiguraGeometrica):
     
     def get_area(self):
         return (self.base * self.altura) / 2
-
-
-
-    
+ 
 # Aqui empiza nuestro codigo
 #import turtle
+import turtle 
+t = turtle.Turtle()
 
-#t = turtle.turtle
+class TicTacToeTablero():
+
+    def __init__(self, tamaño = 200):
+        self.tamaño = tamaño
+
+    def dibuja_tablero(self):
+        t.penup()
+        t.goto(-self.tamaño // 2, self.tamaño //6)
+        t.pendown()
+        t.forward(self.tamaño)
+
+        t.penup()
+        t.goto(-self.tamaño // 2, -self.tamaño //6)
+
+        t.penup()
+        t.forward(self.tamaño)
+
+        t.penup()
+        t.goto(-self.tamaño // 6, self.tamaño //2)
+        t.pendown()
+        t.forward(self.tamaño)
+
+    def display(self):
+        screen = turtle.Screen()
+        self.dibuja_tablero()
+        screen.mainloop()
+
+#t = ture.turtle
 #prueba = Rectangulo(2,2)
 #prueba.dibujaFigura(t)
 
 #Prueba de las clases
+tablero = TicTacToeTablero(300)
+tablero.display()
+
 rect = Rectangulo(10,5)
 print(rect)
 
