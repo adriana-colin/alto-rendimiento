@@ -1,10 +1,10 @@
+import math
+
 class FiguraGeometrica():
 
-    ubicacion_x = 0
-    ubicacion_y = 0
-    
     def __init__(self):
-        None
+        self.ubicacion_x = 0
+        self.ubicacion_y = 0
 
     def dibujaFigura(self):
         None
@@ -19,9 +19,6 @@ class FiguraGeometrica():
         self.ubicacion_y = y
     
 class Rectangulo(FiguraGeometrica):
-
-    alto = 0.0
-    base = 0.0
     
     def __init__(self,alto,base):
         self.alto = float(alto)
@@ -35,15 +32,31 @@ class Rectangulo(FiguraGeometrica):
 
 
 class Circulo(FiguraGeometrica):
-    None # Tarea
 
+    def __init__(self, radio):
+        self.radio = float(radio)
+    
+    def __str__(self):
+        return "Es un círculo, con área: " + str(self.get_area())
+    
+    def get_area(self):
+        return math.pi * (self.radio ** 2)
 class Triangulo(FiguraGeometrica):
-    None # Tarea
+    
+    base = 0.0
+    altura = 0.0
 
-# Tarea:
-# Implementar Circulo & Triangulo
-# Refactor Proyecto Semanal 01
-# Dibujar figura a traves del metodo dibujaFigura()
+    def __init__(self, base, altura):
+        self.base = float(base)
+        self.altura = float(altura)
+
+    def __str__(self):
+        return "Este es un trángulo, con área: " + str(self.get_area())
+    
+    def get_area(self):
+        return (self.base * self.altura) / 2
+
+
 
     
 # Aqui empiza nuestro codigo
@@ -53,8 +66,12 @@ class Triangulo(FiguraGeometrica):
 #prueba = Rectangulo(2,2)
 #prueba.dibujaFigura(t)
 
+#Prueba de las clases
+rect = Rectangulo(10,5)
+print(rect)
 
-prueba = Rectangulo(2,2)
+circ = Circulo(7)
+print(circ)
 
-print(prueba.ubicacion_x)
-print(str(prueba.get_area()))
+tri = Triangulo(6, 3)
+print(tri)
