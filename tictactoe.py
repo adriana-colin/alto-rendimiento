@@ -59,36 +59,35 @@ class TicTacToeTablero():
 
     def __init__(self, tamaño = 200):
         self.tamaño = tamaño
+        self.t = turtle.Turtle()
 
     def dibuja_tablero(self):
-        t.penup()
-        t.goto(-self.tamaño // 2, self.tamaño //6)
-        t.pendown()
-        t.forward(self.tamaño)
-
-        t.penup()
-        t.goto(-self.tamaño // 2, -self.tamaño //6)
-
-        t.penup()
-        t.forward(self.tamaño)
-
-        t.penup()
-        t.goto(-self.tamaño // 6, self.tamaño //2)
-        t.pendown()
-        t.forward(self.tamaño)
+        #Líneas verticales
+        for i in range(2):
+            self.t.penup()
+            self.t.goto(-self.tamaño // 6 + i * self.tamaño // 3, self.tamaño // 2)
+            self.t.pendown()
+            self.t.goto(-self.tamaño // 6 + i * self.tamaño // 3, -self.tamaño // 2)
+        
+        #Líneas horizontales
+        for i in range(2):
+            self.t.penup()
+            self.t.goto(-self.tamaño // 2, self.tamaño // 6 - i * self.tamaño // 3)
+            self.t.pendown()
+            self.t.goto(self.tamaño // 2, self.tamaño // 6 - i * self.tamaño //3)
 
     def display(self):
         screen = turtle.Screen()
         self.dibuja_tablero()
         screen.mainloop()
 
-#t = ture.turtle
-#prueba = Rectangulo(2,2)
+
 #prueba.dibujaFigura(t)
 
 #Prueba de las clases
-tablero = TicTacToeTablero(300)
-tablero.display()
+if __name__ == "__main__":
+    tablero = TicTacToeTablero(tamaño = 300)
+    tablero.display()
 
 rect = Rectangulo(10,5)
 print(rect)
