@@ -1,6 +1,4 @@
-import math
 import turtle 
-t = turtle.Turtle()
 
 class TicTacToeTablero():
 
@@ -23,18 +21,50 @@ class TicTacToeTablero():
             self.t.pendown()
             self.t.goto(self.tamaño // 2, self.tamaño // 6 - i * self.tamaño //3)
 
-    def dibuja_circulo(self, row, col):
-        self.t.penup()
-        center_x = -self.tamaño // 2 + col * self.tamaño // 3 + self.tamaño // 6
-        center_y = self.tamaño // 2 - row * self.tamaño // 3 - self.tamaño // 6
-        self.t.goto(center_x, center_y - self.tamaño // 12)
-        self.t.pendown()
-        self.t.circle(self.tamaño // 12)
+    def display(self):
+        screen = turtle.Screen()
+        self.dibuja_tablero()
+        screen.mainloop()
 
-    def dibuja_x(self, row, col):
+class FiguraGeometrica:
+    def __init__(self):
+        self.ubicacion_x = 0
+        self.ubicacion_y = 0
+        self.t = turtle.Turtle()
+
+    def dibuja_figura(self):
+        pass
+
+    def modificar_x(self, x):
+        self.ubicacion_x = x
+
+    def modificar_y(self, y):
+        self.ubicacion_y = y
+
+class Circulo(FiguraGeometrica):
+
+    def __init__(self, radio):
+        self.radio = float(radio)
+        self.t = turtle.Turtle()
+
+
+    def dibuja_circulo(self, row, col, tamaño):
         self.t.penup()
-        start_x = -self.tamaño // 2 + col * self.tamaño // 3 + self.tamaño // 12
-        start_y = self.tamaño // 2 - row * self.tamaño // 3 - self.tamaño // 12
+        center_x = -tamaño // 3 + col * tamaño // 3 + tamaño //6
+        center_y = tamaño // 3 - row * tamaño // 3 - tamaño // 6
+        self.t.goto(center_x, center_y - tamaño // 12)
+        self.t.pendown()
+        self.t.circle(tamaño // 12)
+
+class Tachita(FiguraGeometrica):
+    
+    def __init__(self, tamaño = 200):
+        self.t = turtle.Turtle()
+
+    def dibuja_x(self, row, col, tamaño):
+        self.t.penup()
+        start_x = -tamaño // 3 + col * tamaño // 3 + tamaño // 12
+        start_y = tamaño // 3 - row * tamaño // 3 - tamaño // 12
         self.t.goto(start_x, start_y)
         self.t.pendown()
         self.t.goto(start_x + self.tamaño // 6, start_y - self.tamaño // 6)
@@ -43,76 +73,38 @@ class TicTacToeTablero():
         self.t.pendown()
         self.t.goto(start_x + self.tamaño // 6, start_y)
 
-    def display(self):
-        screen = turtle.Screen()
-        self.dibuja_tablero()
-        screen.mainloop()
-
-
-class FiguraGeometrica():
-
-    def __init__(self):
-        self.ubicacion_x = 0
-        self.ubicacion_y = 0
-
-    def dibujaFigura(self):
-        None
-
-    def modificar_x(self, x):
-        self.ubicacion_x = x
-    
-    def modificar_y(self, y):
-        self.ubicacion_y = y
-    
-class Rectangulo(FiguraGeometrica):
-    
-    def __init__(self,alto,base):
-        self.alto = float(alto)
-        self.base = float(base)
-
-    def __str__(self):
-        return "Es un rectangulo, con area: " + str(self.get_area())
-        
-    def get_area(self):
-        return self.alto * self.base
-
-
-class Circulo(FiguraGeometrica):
-
-    def __init__(self, radio):
-        self.radio = float(radio)
-
-    def __str__(self):
-        return "Es un círculo, con área: " + str(self.get_area())
-    
-    def get_area(self):
-        return math.pi * (self.radio ** 2)
-    
-class Triangulo(FiguraGeometrica):
-    
-    def __init__(self, base, altura):
-        self.base = float(base)
-        self.altura = float(altura)
-
-    def __str__(self):
-        return "Este es un trángulo, con área: " + str(self.get_area())
-    
-    def get_area(self):
-        return (self.base * self.altura) / 2
+def obtener_coordenadas():
+    while True:
+        try:
+            row = int(input("Introduce la fila (0, 1, 2): "))
+            col = int(input("Introduce la columna (0, 1, 2): "))
+            if row in [0, 1, 2] and col in [0, 1, 2]:
+                return row, col
+            else:
+                print("Por favor, introduce valores válidos para fila y columna (0, 1, 2).")
+        except ValueError:
+            print("Por favor, introduce números válidos.")
  
 
 #Prueba de las clases
 if __name__ == "__main__":
-    tablero = TicTacToeTablero(tamaño = 300)
+    tablero = TicTacToeTablero(tamaño=300)
     tablero.dibuja_tablero()
-    tablero.dibuja_circulo(0, 0)  
-    tablero.dibuja_x(0, 1)        
 
-rect = Rectangulo(10,5)
-print(rect)
+    while True:
+        figura = input("¿Qué figura quieres dibujar? (circulo/x/salir): ").lower()
+        if figura == "salir":
+            break
 
-circ = Circulo(7)
-print(circ)
+        row, col = obtener_coordenadas()
 
-tri = Triangulo(6, 3)
-print(tri)
+        if figura == "circulo":
+            circulo = Circulo(radio=50)
+            circulo.dibuja_circulo(row, col, tamaño=300)
+        elif figura == "x":
+            tachita = Tachita(altura=100, ancho=100)
+            tachita.dibuja_x(row, col, tamaño=300)
+        else:
+            print("Figura no reconocida. Por favor, elige 'circulo' o 'x'.")
+
+    turtle.done()
